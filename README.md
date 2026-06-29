@@ -44,6 +44,7 @@ The pipeline has four stages:
 - PostgreSQL with the [pgvector](https://github.com/pgvector/pgvector) extension installed
 - A Google Cloud service account with access to the Google Sheets API
 - An OpenAI API key (only needed for description generation)
+- This project was built and tested on Windows. The data-loading scripts (`create_descriptions.py`, `02_load_data.py`) use hardcoded Windows-style file paths that you'll need to adjust if running on Linux or macOS.
 
 ## Setup
 
@@ -101,7 +102,9 @@ python scripts/01_init_db.py
 # 2. Load subreddit data from the XLSX file
 python scripts/02_load_data.py
 
-# 3. Generate embeddings (can take a while on CPU)
+# 3. Generate embeddings
+#    A CUDA-capable GPU is strongly recommended — embedding 40k descriptions
+#    on CPU can take many hours, while a GPU with CUDA cores brings this down to about an hour.
 python scripts/03_embed.py
 
 # 4. Start the interactive search loop
